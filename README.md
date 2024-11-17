@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The Smart Grid Stability Prediction project aims to predict the stability of smart grids using various machine learning algorithms. The project leverages different supervised learning models to classify whether the smart grid will remain stable or unstable based on various input features. 
+The Smart Grid Stability Prediction project aims to predict the stability of smart grids using various machine learning algorithms. The project leverages different supervised learning models to classify whether the smart grid will remain stable or unstable based on various input features.
 
 The goal of the project is to evaluate the performance of these algorithms in predicting grid stability and to understand their strengths and weaknesses when applied to real-world data.
 
@@ -16,7 +16,7 @@ The dataset contains several features representing different parameters that aff
 
 - **tau1, tau2, tau3, tau4**: Reaction times of the energy producer and consumers.
 - **p1, p2, p3, p4**: Power balance of the energy producer and consumers.
-- **g1, g2**: Price elasticity coefficients of the energy producer and consumers.
+- **g1, g2, g3, g4**: Price elasticity coefficients of the energy producer and consumers.
 
 These features are used to predict the stability of the grid, with the target variable indicating whether the grid is stable (label `1`) or unstable (label `0`).
 
@@ -30,21 +30,49 @@ We employed the following machine learning algorithms for classification in this
    - **Linear Kernel**: SVM with a linear kernel.
    - **Polynomial Kernel**: SVM with a polynomial kernel.
    - **Radial Basis Function (RBF) Kernel**: SVM with the RBF kernel.
+4. **Neural Network**: A deep learning approach to predict the stability of the smart grid.
+
+### Neural Network Architecture
+
+The neural network was implemented using PyTorch and consists of the following layers:
+
+- **Input Layer**: 
+  - Takes the 12 input features (`tau1, tau2, tau3, tau4, p1, p2, p3, p4, g1, g2, g3, g4`) and passes them to the next layer.
+
+- **Hidden Layer 1**: 
+  - Fully connected layer with 64 neurons and ReLU activation function.
+
+- **Hidden Layer 2**: 
+  - Fully connected layer with 128 neurons and ReLU activation function.
+
+- **Output Layer**: 
+  - Fully connected layer with a single neuron and a sigmoid activation function to output the probability of the grid being stable (binary classification).
+
+- **Loss Function**: 
+  - Binary Cross-Entropy Loss, suitable for binary classification tasks.
+
+- **Optimizer**: 
+  - Adam Optimizer, which adapts the learning rate during training for efficient convergence.
+
+- **Training Procedure**: 
+  - The model was trained over 100 epochs with early stopping applied to prevent overfitting.
+  - Batch size of 32 was used, and the learning rate was set to 0.001.
+  - The training data was split into batches and passed through the model, and the loss was calculated and minimized using backpropagation.
 
 ### Evaluation Metrics
 
 To evaluate the performance of the models, we used several metrics, which are widely accepted in the machine learning community for classification problems:
 
 - **Accuracy**: The proportion of true results (both true positives and true negatives) among the total number of cases examined.
-  
+
 - **Sensitivity (Recall)**: The proportion of actual positives that are correctly identified by the model. In this case, it indicates the model's ability to correctly identify stable grids.
-  
+
 - **Specificity**: The proportion of actual negatives that are correctly identified. Here, it indicates the model's ability to identify unstable grids.
-  
+
 - **F1-Score**: The harmonic mean of precision and recall, providing a single metric that balances both concerns.
-  
+
 - **Confusion Matrix**: A table used to describe the performance of a classification algorithm, showing true positives, true negatives, false positives, and false negatives.
-  
+
 - **ROC-AUC Curve**: A graphical representation of the model's performance, showing the trade-off between sensitivity and specificity for different thresholds.
 
 ### Dataset Preprocessing
@@ -61,10 +89,10 @@ Before training the models, the dataset underwent several preprocessing steps:
 The models were trained on the training data, and their performance was evaluated on the test data using the aforementioned metrics. Here's a summary of the training process:
 
 1. **Model Training**:
-   - Models were trained using various algorithms like Logistic Regression, KNN, and SVM with different kernel types.
+   - Models were trained using various algorithms like Logistic Regression, KNN, SVM with different kernel types, and the Neural Network.
    - Hyperparameters were tuned using techniques like Grid Search or Random Search (where applicable).
 
-2. **Early Stopping**: 
+2. **Early Stopping**:
    - For certain models, early stopping was applied to prevent overfitting and improve generalization by halting training once the validation loss stopped improving.
 
 3. **Model Evaluation**:
